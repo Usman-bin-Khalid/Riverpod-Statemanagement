@@ -10,3 +10,8 @@ final stockPriceProvider = StreamProvider<double>((ref) async* {
     yield double.parse(currentPrice.toStringAsFixed(2));
   }
 });
+
+
+// Stream is a way to handle asynchronous data that is delieverd over time
+
+// example :  Chating Apps
