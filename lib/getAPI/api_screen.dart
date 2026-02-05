@@ -34,4 +34,13 @@ class PostModel {
       body: json['body'],
     );
   }
+
+    Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'title': title,
+      'body': body,
+    };
+  }
 }
