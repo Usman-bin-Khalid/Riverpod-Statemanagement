@@ -10,9 +10,35 @@ class ApiScreen extends ConsumerWidget {
     final postList = ref.watch(postProvider);
     return Scaffold(
       appBar: AppBar(),
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () {
+          ref.invalidate(postProvider);
+        
+        },
+      ),
       body: Center(
-        child: postList.when(data: (value) => ListView.builder(itemBuilder: itemBuilder), error: (error, stack) => Text(error.toString()), loading: () =>  const CircularProgressIndicator()),
+        child: postList.when(
+          data: (data) => ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final item = data[index];
+              return Card(
+                child: Column(
+                  children: [
+                    Text(item.id.toString()),
+                    Text(item.title),
+                    Text(item.body),
+                    Text(item.userId.toString()),
+                  ],
+                ),
+              );
+            },
+          ),
+          error: (error, stack) => Text(error.toString()),
+          loading: () => const CircularProgressIndicator(),
+          skipLoadingOnRefresh: true,
+        ),
       ),
     );
   }
