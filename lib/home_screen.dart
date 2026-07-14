@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/legacy.dart';
 final hello = Provider<String>((ref) {
   return "Subscribe";
 });
+
 final age = Provider<int>((ref) {
   return 20;
 });
@@ -13,24 +14,112 @@ final counter = StateProvider<int>((ref) {
   return 0;
 });
 
-class HomeScreen extends ConsumerWidget {
+final switchProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+// class HomeScreen extends ConsumerWidget {
+//   const HomeScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Consumer(
+//               builder: (context, ref, child) {
+//                 final count = ref.watch(counter);
+//                 return Center(child: Text(count.toString()));
+//               },
+//             ),
+//             Consumer(
+//               builder: (context, ref, child) {
+//                 final count = ref.watch(switchProvider);
+//                 return Switch(
+//                   value: count,
+//                   onChanged: (value) {
+//                     ref.read(switchProvider.notifier).state = value;
+//                   },
+//                 );
+//               },
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 ElevatedButton(
+//                   child: Text('+'),
+//                   onPressed: () {
+//                     ref.read(counter.notifier).state++;
+//                   },
+//                 ),
+//                 ElevatedButton(
+//                   child: Text('-'),
+//                   onPressed: () {
+//                     ref.read(counter.notifier).state--;
+//                   },
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+  
+  
+  
+//   }
+
+
+
+// }
+
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(counter);
-    return Scaffold(
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+  return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(count.toString()),
+            Consumer(
+              builder: (context, ref, child) {
+                final count = ref.watch(counter);
+                return Center(child: Text(count.toString()));
+              },
+            ),
+            Consumer(
+              builder: (context, ref, child) {
+                final count = ref.watch(switchProvider);
+                return Switch(
+                  value: count,
+                  onChanged: (value) {
+                    ref.read(switchProvider.notifier).state = value;
+                  },
+                );
+              },
+            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   child: Text('+'),
                   onPressed: () {
                     ref.read(counter.notifier).state++;
+                  },
+                ),
+                ElevatedButton(
+                  child: Text('-'),
+                  onPressed: () {
+                    ref.read(counter.notifier).state--;
                   },
                 ),
               ],
@@ -39,9 +128,11 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
     );
+  
+  
+  
   }
 }
-
 
 // class HomeScreen extends ConsumerWidget {
 //   const HomeScreen({super.key});
