@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_state_management/search_provider.dart';
 
+
+
 class Home extends ConsumerWidget {
   const Home({super.key});
 
@@ -23,6 +25,17 @@ class Home extends ConsumerWidget {
             builder: (context, ref, child) {
               final search = ref.watch(searchProvider);
               return Text(search.search);
+            },
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              final isChange = ref.watch((searchProvider).select((state) => state.isChanged));
+              return Switch(
+                value: isChange,
+                onChanged: (value) {
+                  ref.read(searchProvider.notifier).onChanged(value);
+                },
+              );
             },
           ),
         ],
