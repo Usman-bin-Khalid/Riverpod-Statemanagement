@@ -26,9 +26,14 @@ class Todo extends ConsumerWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(onPressed: () {
-                        
-                      }, icon: Icon(Icons.edit)),
+                      IconButton(
+                        onPressed: () {
+                          ref
+                              .read(itemProvider.notifier)
+                              .updateItem(itemDetail.id, 'Updated Item');
+                        },
+                        icon: Icon(Icons.edit),
+                      ),
                       IconButton(
                         onPressed: () {
                           ref
