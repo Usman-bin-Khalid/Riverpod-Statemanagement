@@ -16,11 +16,24 @@ class Todo extends ConsumerWidget {
         },
         child: Icon(Icons.add),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile();
-        },
-      ),
+      body: item.isEmpty
+          ? Center(child: Text("No Item"))
+          : ListView.builder(
+            itemCount: item.length,
+              itemBuilder: (context, index) {
+                final itemDetail = item[index];
+                return ListTile(
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                     IconButton(onPressed: () {}, icon: Icon(Icons.delete))
+
+                    ],
+                  ),
+                  title: Text(itemDetail.name),
+                );
+              },
+            ),
     );
   }
 }
