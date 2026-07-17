@@ -19,15 +19,24 @@ class Todo extends ConsumerWidget {
       body: item.isEmpty
           ? Center(child: Text("No Item"))
           : ListView.builder(
-            itemCount: item.length,
+              itemCount: item.length,
               itemBuilder: (context, index) {
                 final itemDetail = item[index];
                 return ListTile(
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                     IconButton(onPressed: () {}, icon: Icon(Icons.delete))
-
+                      IconButton(onPressed: () {
+                        
+                      }, icon: Icon(Icons.edit)),
+                      IconButton(
+                        onPressed: () {
+                          ref
+                              .read(itemProvider.notifier)
+                              .deleteItem(itemDetail.id);
+                        },
+                        icon: Icon(Icons.delete),
+                      ),
                     ],
                   ),
                   title: Text(itemDetail.name),

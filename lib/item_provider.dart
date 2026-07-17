@@ -14,6 +14,12 @@ class ItemNotifier extends StateNotifier<List<Item>> {
     state = state.toList();
   }
 
+  void updateItem(String id, String name) {
+    int foundIndex = state.indexWhere((item) => item.id == id);
+    state[foundIndex].name = name;
+    state = state.toList();
+  }
+
   void deleteItem(String id) {
     state.removeWhere((item) => item.id == id);
     state = state.toList();
