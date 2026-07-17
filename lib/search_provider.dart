@@ -18,6 +18,8 @@ class SearchNotifier extends StateNotifier<SearchState> {
   }
 }
 
+
+
 class SearchState {
   final String search;
   final bool isChanged;
