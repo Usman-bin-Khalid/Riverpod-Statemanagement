@@ -9,7 +9,21 @@ class FavouriteScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favouriteList = ref.watch(favouriteProvider);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              ref.read(favouriteProvider.notifier).favourite(value);
+            },
+            itemBuilder: (BuildContext context) {
+              return const [
+                PopupMenuItem(child: Text('All'), value: 'All'),
+                PopupMenuItem(child: Text('Favourite'), value: 'Favourite'),
+              ];
+            },
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ref.read(favouriteProvider.notifier).addItem();
@@ -19,12 +33,13 @@ class FavouriteScreen extends ConsumerWidget {
       body: Column(
         children: [
           TextField(
-            decoration: InputDecoration(hintText: 'Search',
-            border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              hintText: 'Search',
+              border: OutlineInputBorder(),
             ),
-                onChanged: (value) {
-
-                },         
+            onChanged: (value) {
+              ref.read(favouriteProvider.notifier).filterList(value);
+            },
           ),
           Expanded(
             child: ListView.builder(
@@ -33,7 +48,9 @@ class FavouriteScreen extends ConsumerWidget {
                 final item = favouriteList.filteredItem[index];
                 return ListTile(
                   title: Text(item.name),
-                  trailing: Icon(item.favourite ? Icons.favorite : Icons.favorite_border),
+                  trailing: Icon(
+                    item.favourite ? Icons.favorite : Icons.favorite_border,
+                  ),
                 );
               },
             ),

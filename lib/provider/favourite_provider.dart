@@ -33,6 +33,20 @@ class FavouriteNotifier extends StateNotifier<FavouriteState> {
     );
   }
 
+  void favourite(String option) {
+    state = state.copyWith(
+      filteredItem: _filterItems(state.allItems, option)
+    );
+  }
+
+  List<Item> _favouriteItem(List<Item> items, String option) {
+    if (option == 'All') {
+      return items;
+    }
+    return items
+        .where((item) => item.favourite == true)
+        .toList();
+  }
   List<Item> _filterItems(List<Item> items, String search) {
     if (search.isEmpty) {
       return items;
