@@ -21,6 +21,20 @@ class FavouriteNotifier extends StateNotifier<FavouriteState> {
       Item(name: "Google Pixel 9", id: 5, favourite: false),
       Item(name: "IPad Pro 13", id: 6, favourite: true),
     ];
-    state = state.copyWith(allItems: items.toList(), filteredItem: items.toList());
+    state = state.copyWith(
+      allItems: items.toList(),
+      filteredItem: items.toList(),
+    );
+  }
+
+  void filterList(String search) {}
+
+  List<Item> _filterItems(List<Item> items, String query) {
+    if (query.isEmpty) {
+      return items;
+    }
+    return items
+        .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 }
