@@ -27,14 +27,18 @@ class FavouriteNotifier extends StateNotifier<FavouriteState> {
     );
   }
 
-  void filterList(String search) {}
+  void filterList(String search) {
+    state = state.copyWith(
+      filteredItem: _filterItems(state.allItems, search)
+    );
+  }
 
-  List<Item> _filterItems(List<Item> items, String query) {
-    if (query.isEmpty) {
+  List<Item> _filterItems(List<Item> items, String search) {
+    if (search.isEmpty) {
       return items;
     }
     return items
-        .where((item) => item.name.toLowerCase().contains(query.toLowerCase()))
+        .where((item) => item.name.toLowerCase().contains(search.toLowerCase()))
         .toList();
   }
 }
