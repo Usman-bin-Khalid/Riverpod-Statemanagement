@@ -3,8 +3,8 @@ import 'dart:core';
 import 'package:riverpod_state_management/models/item.dart';
 
 class FavouriteState {
-  final List = <Item> allItems;
-  final List = <Item> filteredItem;
+  final List  <Item> allItems;
+  final List <Item> filteredItem;
   final String search;
   FavouriteState({ required this.allItems, required this.filteredItem, required this.search});
 
