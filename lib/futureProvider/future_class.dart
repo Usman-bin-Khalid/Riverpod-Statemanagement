@@ -11,7 +11,25 @@ class FutureClass extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: provider.when(data: (value) => Text(value.toString()), error: (error, stack) => Text(error.toString()), loading: () =>  CircularProgressIndicator()),
+        child: provider.when(
+          skipLoadingOnRefresh: false,
+          // Reload krny pr loader chly ga
+          data: (value) => ListView.builder(
+            itemCount: value.length,
+            itemBuilder: (context, index) {
+              return Text(value[index].toString());
+            },
+          ),
+          error: (error, stack) => Text(error.toString()),
+          loading: () => CircularProgressIndicator(),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.refresh),
+        onPressed: () {
+          ref.invalidate(futureProvider);
+          
+        },
       ),
     );
   }
